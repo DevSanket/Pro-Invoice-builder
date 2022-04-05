@@ -12,6 +12,6 @@ export default function Screen({children,style}) {
 const styles = StyleSheet.create({
     container:{
         flex:1,
-        paddingTop: Platform.OS === "android" ? 15 : 0
+        paddingTop: Platform.OS === "android" ? 20 : 0
     }
 })

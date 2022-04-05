@@ -2,7 +2,7 @@ import { useContext } from "react";
 import AuthContext from './context';
 import authStorage from './storage';
 
-export default useAuth = () => {
+const useAuth = () => {
     const {userData,setUserData} = useContext(AuthContext);
 
     
@@ -20,3 +20,5 @@ export default useAuth = () => {
     return {userData,setUserData,logOut,logIn};
 
 }
+
+export default useAuth;

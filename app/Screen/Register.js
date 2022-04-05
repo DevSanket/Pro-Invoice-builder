@@ -1,4 +1,4 @@
-import { StyleSheet, ScrollView } from "react-native";
+import { StyleSheet, ScrollView,Alert } from "react-native";
 import React, { useState } from "react";
 import Screen from "../Components/Screen";
 import {
@@ -10,6 +10,7 @@ import {
 } from "../Components/forms";
 import * as Yup from "yup";
 import colors from "../config/colors";
+import useAuth from "../../app/auth/useAuth";
 
 const validationSchema = Yup.object().shape({
   company_name: Yup.string().required().min(1).label("Name"),
@@ -18,8 +19,27 @@ const validationSchema = Yup.object().shape({
 });
 
 export default function Register() {
+  const auth = useAuth();
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async({images,company_name,company_contact,company_address}) => {
+
+    const user = {
+      logo : images[0],
+      company_name,
+      company_contact,
+      company_address
+    }
+
+    try {
+      auth.logIn(user);
+    } catch (error) {
+      Alert.alert("All Fields are Required");
+    }
+
+  }
+
   return (
     <Screen style={styles.container}>
         <Form
@@ -30,6 +50,7 @@ export default function Register() {
             company_address: "",
           }}
           validationSchema={validationSchema}
+          onSubmit={handleSubmit}
         >
           <FormImagePicker name="images" />
           <FormField
